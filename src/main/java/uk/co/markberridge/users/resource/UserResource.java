@@ -1,4 +1,4 @@
-package uk.co.markberridge.users.resources;
+package uk.co.markberridge.users.resource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;

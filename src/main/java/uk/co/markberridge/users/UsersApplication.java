@@ -5,7 +5,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import uk.co.markberridge.users.dao.UserRepository;
 import uk.co.markberridge.users.dao.UserRepositoryInMemory;
-import uk.co.markberridge.users.resources.UserResource;
+import uk.co.markberridge.users.resource.UserResource;
 
 public class UsersApplication extends Application<UsersConfiguration> {
 
