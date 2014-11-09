@@ -1,5 +1,6 @@
 package uk.co.markberridge.users.domain;
 
+import java.net.URI;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.ws.rs.core.UriBuilder;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -20,7 +22,9 @@ import org.hibernate.annotations.AttributeAccessor;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
+import uk.co.markberridge.users.api.Link;
 import uk.co.markberridge.users.event.Event;
+import uk.co.markberridge.users.resource.UserResource;
 
 import com.google.common.base.Objects;
 import com.google.common.primitives.Longs;
@@ -51,9 +55,17 @@ public class UserEvent implements Event<UserEvent> {
     @JoinColumn(name = "USERS_ID")
     private User user;
 
+    @XmlElement
+    private Link link;
+
     public UserEvent(User user) {
         this();
         this.user = user;
+
+        // build URI to the User
+        // TODO make link URI absolute
+        URI uri = UriBuilder.fromResource(UserResource.class).path(user.getUsername()).build();
+        this.link = new Link("user", uri);
     }
 
     // @MarshallingConstructor

@@ -27,7 +27,8 @@ public class User {
     @SuppressWarnings("unused")
     private StateMachine<State, Trigger> stateMachine;
 
-    User() {
+    @SuppressWarnings("unused")
+    private User() {
         // marshaling
     }
 
