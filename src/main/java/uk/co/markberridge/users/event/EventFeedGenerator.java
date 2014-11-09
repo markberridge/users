@@ -4,7 +4,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.io.StringWriter;
 import java.net.URI;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +20,8 @@ import org.apache.abdera.model.Generator;
 import org.apache.abdera.model.Link;
 import org.apache.abdera.model.Person;
 import org.joda.time.LocalDateTime;
+
+import uk.co.markberridge.users.dao.EventDao;
 
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
@@ -47,7 +48,7 @@ public class EventFeedGenerator<T extends Event<T>> {
     private final static Factory abderaFactory = Abdera.getNewFactory();
 
     public EventFeedGenerator(Class<T> clazz, EventType type, EventDao<T> eventDao,
-            EventFeedConfiguration eventFeedConfiguration, EventFeedUriFactory uriFactory) {
+            EventFeedConfiguration eventFeedConfiguration) {
 
         checkArgument(eventFeedConfiguration.getEntriesPerFeed() > 0,
                 "Entries per event feed in config needs to be > 0");
@@ -56,7 +57,7 @@ public class EventFeedGenerator<T extends Event<T>> {
         this.type = type;
         this.eventDao = eventDao;
         this.entriesPerFeed = eventFeedConfiguration.getEntriesPerFeed();
-        this.uriFactory = uriFactory;
+        this.uriFactory = new EventFeedUriFactory(entriesPerFeed);
         try {
             this.context = JAXBContext.newInstance(clazz);
         } catch (JAXBException e) {
@@ -155,7 +156,7 @@ public class EventFeedGenerator<T extends Event<T>> {
 
         List<T> events = eventDao.getEvents(startEntry, entriesPerFeed);
 
-        Collections.sort(events);
+        // Collections.sort(events);
 
         for (Entry entry : createEntries(uri, events)) {
             feed.addEntry(entry);

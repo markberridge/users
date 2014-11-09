@@ -1,4 +1,4 @@
-package uk.co.markberridge.users.event;
+package uk.co.markberridge.users.dao;
 
 import java.util.List;
 

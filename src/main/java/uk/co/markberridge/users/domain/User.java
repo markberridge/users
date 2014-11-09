@@ -1,5 +1,12 @@
 package uk.co.markberridge.users.domain;
 
+import javax.xml.bind.annotation.XmlAccessOrder;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorOrder;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import uk.co.markberridge.users.UsersRuntimeException;
 
 import com.github.oxo42.stateless4j.StateMachine;
@@ -7,13 +14,22 @@ import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
+@XmlAccessorOrder(XmlAccessOrder.ALPHABETICAL)
 public class User {
 
-    private final String username;
-    private final String password;
+    @XmlElement
+    private String username;
+
+    private String password;
 
     @SuppressWarnings("unused")
-    private final StateMachine<State, Trigger> stateMachine;
+    private StateMachine<State, Trigger> stateMachine;
+
+    User() {
+        // marshaling
+    }
 
     public User(UserBuilder builder) {
         this.username = builder.username;

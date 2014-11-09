@@ -23,11 +23,10 @@ import org.junit.After;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import uk.co.markberridge.users.dao.EventDao;
 import uk.co.markberridge.users.event.Event;
-import uk.co.markberridge.users.event.EventDao;
 import uk.co.markberridge.users.event.EventFeedConfiguration;
 import uk.co.markberridge.users.event.EventFeedGenerator;
-import uk.co.markberridge.users.event.EventFeedUriFactory;
 import uk.co.markberridge.users.event.EventType;
 import uk.co.markberridge.users.provider.ContextInjectableProvider;
 
@@ -40,10 +39,8 @@ public class EventResourceTest {
     @SuppressWarnings("unchecked")
     private final static EventDao<MockEvent> eventDao = mock(EventDao.class);
 
-    private final static EventFeedUriFactory feedUriFactory = new EventFeedUriFactory(20);
-
     private static EventFeedGenerator<MockEvent> eventGenerator = new EventFeedGenerator<>(MockEvent.class,
-            EventType.USER, eventDao, configuration, feedUriFactory);
+            EventType.USER, eventDao, configuration);
 
     private final static EventResource<MockEvent> genericEventResource = new EventResource<>(eventGenerator);
 

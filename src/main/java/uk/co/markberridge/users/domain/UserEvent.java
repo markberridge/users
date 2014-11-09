@@ -78,7 +78,7 @@ public class UserEvent implements Event<UserEvent> {
 
     @Override
     public String getEventType() {
-        return "Result";
+        return "User";
     }
 
     public User getUser() {

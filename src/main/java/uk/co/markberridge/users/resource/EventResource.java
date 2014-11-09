@@ -42,7 +42,7 @@ public class EventResource<T extends Event<T>> {
     @Path("/recent")
     @Produces(MediaType.APPLICATION_ATOM_XML)
     @UnitOfWork(readOnly = true)
-    public Response getRecentFeed(@PathParam("type") EventType type) {
+    public Response getRecentFeed() {
         Feed feed = generator.getRecentFeed(uriInfo.getRequestUri());
         CacheControl cc = new CacheControl();
         cc.setNoCache(true);
@@ -54,8 +54,7 @@ public class EventResource<T extends Event<T>> {
     @Path("/{startPos},{endPos}")
     @Produces(MediaType.APPLICATION_ATOM_XML)
     @UnitOfWork(readOnly = true)
-    public Response getSpecificFeed(@PathParam("type") EventType type, @PathParam("startPos") int startPos,
-            @PathParam("endPos") int endPos) {
+    public Response getSpecificFeed(@PathParam("startPos") int startPos, @PathParam("endPos") int endPos) {
 
         if (generator.invalidStartAndEndEntries(startPos, endPos)) {
             // Bad URI - the paramters don't align with our feeds
@@ -63,7 +62,7 @@ public class EventResource<T extends Event<T>> {
         }
 
         if (generator.workingFeedRequested(startPos)) {
-            return getWorkingFeed(type);
+            return getWorkingFeed();
         }
 
         CacheControl cc = new CacheControl();
@@ -85,7 +84,7 @@ public class EventResource<T extends Event<T>> {
         return Response.ok().entity(entry).build();
     }
 
-    private Response getWorkingFeed(EventType type) {
+    private Response getWorkingFeed() {
 
         Feed feed = generator.getWorkingFeed(uriInfo.getRequestUri());
 
