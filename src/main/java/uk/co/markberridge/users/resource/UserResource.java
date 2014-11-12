@@ -1,5 +1,7 @@
 package uk.co.markberridge.users.resource;
 
+import io.dropwizard.hibernate.UnitOfWork;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -21,6 +23,7 @@ import uk.co.markberridge.users.activity.ReadUserActivity;
 import uk.co.markberridge.users.api.UserRepresentation;
 import uk.co.markberridge.users.dao.UserDao;
 
+import com.codahale.metrics.annotation.Timed;
 import com.google.common.base.Optional;
 
 @Path("/user")
@@ -38,6 +41,8 @@ public class UserResource {
     @GET
     @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    @Timed
     public Response getUser(@PathParam("username") String username) {
         Optional<UserRepresentation> user = new ReadUserActivity(dao, uriInfo).retrieveByUsername(username);
         if (!user.isPresent()) {
@@ -50,6 +55,8 @@ public class UserResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    @Timed
     public Response createUser(UserRepresentation user) {
         UserRepresentation responseUser = new CreateUserActivity(dao).create(user);
         return Response.created(UriBuilder.fromResource(getClass()).path(responseUser.getUsername()).build())
@@ -60,6 +67,8 @@ public class UserResource {
     @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @UnitOfWork
+    @Timed
     public Response putUser(@PathParam("username") String username, UserRepresentation user) {
         if (!username.equals(user.getUsername())) {
             return Response.status(Response.Status.BAD_REQUEST)
@@ -72,6 +81,8 @@ public class UserResource {
 
     @DELETE
     @Path("/{username}")
+    @UnitOfWork
+    @Timed
     public Response deleteUser(@PathParam("username") String userId) {
         new DeleteUserActivity(dao).delete(userId);
         return Response.noContent().build();

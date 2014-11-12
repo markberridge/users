@@ -11,7 +11,7 @@ import org.hibernate.cfg.ImprovedNamingStrategy;
 import uk.co.markberridge.users.dao.AuditTrailInterceptor;
 import uk.co.markberridge.users.dao.EventDao;
 import uk.co.markberridge.users.dao.UserDao;
-import uk.co.markberridge.users.dao.UserDaoInMemory;
+import uk.co.markberridge.users.dao.UserDaoHibernate;
 import uk.co.markberridge.users.dao.UserEventDaoInMemory;
 import uk.co.markberridge.users.domain.User;
 import uk.co.markberridge.users.domain.UserEvent;
@@ -31,7 +31,7 @@ public class UsersApplication extends Application<UsersConfiguration> {
 
     public static final Class<?>[] PERSISTENT_CLASSES = new Class[] { User.class };
     public static final HibernateBundle<UsersConfiguration> hibernate = new HibernateBundle<UsersConfiguration>(
-            User.class) {
+            PERSISTENT_CLASSES[0], PERSISTENT_CLASSES) {
 
         @Override
         public DataSourceFactory getDataSourceFactory(UsersConfiguration configuration) {
@@ -71,8 +71,8 @@ public class UsersApplication extends Application<UsersConfiguration> {
     public void run(UsersConfiguration config, Environment environment) {
 
         // DAO
-        UserDao userDao = new UserDaoInMemory();
-        EventDao<UserEvent> eventDao = new UserEventDaoInMemory(userDao);
+        UserDao userDao = new UserDaoHibernate(hibernate.getSessionFactory());
+        EventDao<UserEvent> eventDao = new UserEventDaoInMemory();
 
         // Event Feed Generator
         EventFeedGenerator<UserEvent> eventGenerator = new EventFeedGenerator<>(UserEvent.class, EventType.USER,

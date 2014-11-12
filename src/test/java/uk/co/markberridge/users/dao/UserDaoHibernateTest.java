@@ -72,20 +72,20 @@ public class UserDaoHibernateTest extends AbstractHibernateTestCase {
 
     @Test(expected = UserAlreadyExistsException.class)
     public void createUser_duplicate() {
-        User user = new UserBuilder().username("seed").password("differrent-password").build();
+        User user = new UserBuilder().username("seed").password("different-password").build();
         userDao.createUser(user);
     }
 
     @Test
     public void createOrUpdateUser() {
-        User user = new UserBuilder().username("seed").password("differrent-password").build();
+        User user = new UserBuilder().username("seed").password("different-password").build();
         userDao.createOrUpdateUser(user);
 
         Optional<User> retrievedUser = userDao.getUserByUsername("seed");
         assertTrue(retrievedUser.isPresent());
         assertThat(retrievedUser.get().getId()).isNotNull();
         assertThat(retrievedUser.get().getUsername()).isEqualTo("seed");
-        assertThat(retrievedUser.get().getPassword()).isEqualTo("differrent-password");
+        assertThat(retrievedUser.get().getPassword()).isEqualTo("different-password");
     }
 
     @Test
