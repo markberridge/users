@@ -1,21 +1,23 @@
 package uk.co.markberridge.users.activity;
 
 import uk.co.markberridge.users.api.UserRepresentation;
-import uk.co.markberridge.users.dao.UserRepository;
+import uk.co.markberridge.users.dao.UserDao;
 
 public class CreateUserActivity {
 
-    private final UserRepository userRepository;
+    private final UserDao dao;
 
-    public CreateUserActivity(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public CreateUserActivity(UserDao dao) {
+        this.dao = dao;
     }
 
     public UserRepresentation create(UserRepresentation user) {
-        return new UserRepresentation(userRepository.createUser(user.buildNewUser()));
+        return new UserRepresentation(dao.createUser(user.buildNewUser()));
     }
 
     public UserRepresentation createOrUpdate(UserRepresentation user) {
-        return new UserRepresentation(userRepository.createOrUpdateUser(user.buildNewUser()));
+        
+        
+        return new UserRepresentation(dao.createOrUpdateUser(user.buildNewUser()));
     }
 }

@@ -1,16 +1,16 @@
 package uk.co.markberridge.users.activity;
 
-import uk.co.markberridge.users.dao.UserRepository;
+import uk.co.markberridge.users.dao.UserDao;
 
 public class DeleteUserActivity {
 
-    private final UserRepository userRepository;
+    private final UserDao dao;
 
-    public DeleteUserActivity(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public DeleteUserActivity(UserDao dao) {
+        this.dao = dao;
     }
 
     public void delete(String userId) {
-        userRepository.deleteUser(userId);
+        dao.deleteUserByUsername(userId);
     }
 }

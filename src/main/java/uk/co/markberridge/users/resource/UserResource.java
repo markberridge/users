@@ -19,17 +19,17 @@ import uk.co.markberridge.users.activity.CreateUserActivity;
 import uk.co.markberridge.users.activity.DeleteUserActivity;
 import uk.co.markberridge.users.activity.ReadUserActivity;
 import uk.co.markberridge.users.api.UserRepresentation;
-import uk.co.markberridge.users.dao.UserRepository;
+import uk.co.markberridge.users.dao.UserDao;
 
 import com.google.common.base.Optional;
 
 @Path("/user")
 public class UserResource {
 
-    private final UserRepository userRepository;
+    private final UserDao dao;
 
-    public UserResource(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserResource(UserDao dao) {
+        this.dao = dao;
     }
 
     @Context
@@ -39,7 +39,7 @@ public class UserResource {
     @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("username") String username) {
-        Optional<UserRepresentation> user = new ReadUserActivity(userRepository, uriInfo).retrieveByUsername(username);
+        Optional<UserRepresentation> user = new ReadUserActivity(dao, uriInfo).retrieveByUsername(username);
         if (!user.isPresent()) {
             return Response.status(Status.NOT_FOUND).entity("user with username [" + username + "] does not exist")
                     .build();
@@ -51,7 +51,7 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser(UserRepresentation user) {
-        UserRepresentation responseUser = new CreateUserActivity(userRepository).create(user);
+        UserRepresentation responseUser = new CreateUserActivity(dao).create(user);
         return Response.created(UriBuilder.fromResource(getClass()).path(responseUser.getUsername()).build())
                 .entity(responseUser).build();
     }
@@ -65,7 +65,7 @@ public class UserResource {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("username in URI does not match username in entity").build();
         }
-        UserRepresentation responseUser = new CreateUserActivity(userRepository).createOrUpdate(user);
+        UserRepresentation responseUser = new CreateUserActivity(dao).createOrUpdate(user);
         return Response.created(UriBuilder.fromResource(getClass()).path(responseUser.getUsername()).build())
                 .entity(responseUser).build();
     }
@@ -73,7 +73,7 @@ public class UserResource {
     @DELETE
     @Path("/{username}")
     public Response deleteUser(@PathParam("username") String userId) {
-        new DeleteUserActivity(userRepository).delete(userId);
+        new DeleteUserActivity(dao).delete(userId);
         return Response.noContent().build();
     }
 }

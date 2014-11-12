@@ -11,9 +11,9 @@ public class UserEventDaoInMemory implements EventDao<UserEvent> {
 
     private final List<UserEvent> userEvents = Lists.newArrayList();
 
-    public UserEventDaoInMemory(UserRepository userRepository) {
+    public UserEventDaoInMemory(UserDao userRepository) {
         for (int i = 0; i < 55; i++) {
-            userEvents.add(new UserEvent(userRepository.getUser("admin").get()));
+            userEvents.add(new UserEvent(userRepository.getUserByUsername("admin").get()));
         }
     }
 
