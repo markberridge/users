@@ -29,7 +29,7 @@ public class UsersApplication extends Application<UsersConfiguration> {
         }
     };
 
-    public static final Class<?>[] PERSISTENT_CLASSES = new Class[] { User.class };
+    public static final Class<?>[] PERSISTENT_CLASSES = new Class[] { User.class, UserEvent.class };
     public static final HibernateBundle<UsersConfiguration> hibernate = new HibernateBundle<UsersConfiguration>(
             PERSISTENT_CLASSES[0], PERSISTENT_CLASSES) {
 

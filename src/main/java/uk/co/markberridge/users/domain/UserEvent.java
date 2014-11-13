@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.ws.rs.core.UriBuilder;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -39,7 +40,6 @@ public class UserEvent implements Event<UserEvent> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @AttributeAccessor("property")
-    @Column(name = "ATOM_EVENT_ID")
     @XmlElement
     private Long id;
 
@@ -56,6 +56,7 @@ public class UserEvent implements Event<UserEvent> {
     private User user;
 
     @XmlElement
+    @Transient
     private Link link;
 
     public UserEvent(User user) {
