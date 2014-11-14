@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.ImprovedNamingStrategy;
-import org.hibernate.dialect.SQLServer2012Dialect;
+import org.hibernate.dialect.MySQL5InnoDBDialect;
 import org.hibernate.service.ServiceRegistry;
 import org.junit.rules.ExternalResource;
 
@@ -16,7 +16,7 @@ import uk.co.markberridge.users.ConfigurationRule;
 import uk.co.markberridge.users.UsersConfiguration;
 
 public class HibernateRule extends ExternalResource {
-    
+
     private final ConfigurationRule<UsersConfiguration> configurationRule;
     private final Class<?>[] entities;
     private SessionFactory sessionFactory;
@@ -41,14 +41,14 @@ public class HibernateRule extends ExternalResource {
         config.setProperty("hibernate.show_sql", "true");
         config.setNamingStrategy(ImprovedNamingStrategy.INSTANCE);
         config.setInterceptor(new AuditTrailInterceptor());
-        config.setProperty("hibernate.dialect", SQLServer2012Dialect.class.getName());
+        config.setProperty("hibernate.dialect", MySQL5InnoDBDialect.class.getName());
 
         for (int i = 0; i < entities.length; i++) {
             config.addAnnotatedClass(entities[i]);
         }
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(config.getProperties())
-                                                                              .build();
+                .build();
 
         sessionFactory = config.buildSessionFactory(serviceRegistry);
     }

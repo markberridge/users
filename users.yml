@@ -23,3 +23,9 @@ migrationDatabase:
   password: letmein
   url: jdbc:mysql://localhost:3306/users
   
+
+logging:
+  level: INFO
+  loggers:
+    log4j.logger.org.hibernate.SQL: DEBUG 
+    log4j.logger.org.hibernate.type: TRACE 
