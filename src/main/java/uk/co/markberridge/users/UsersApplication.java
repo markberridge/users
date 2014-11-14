@@ -12,7 +12,7 @@ import uk.co.markberridge.users.dao.AuditTrailInterceptor;
 import uk.co.markberridge.users.dao.EventDao;
 import uk.co.markberridge.users.dao.UserDao;
 import uk.co.markberridge.users.dao.UserDaoHibernate;
-import uk.co.markberridge.users.dao.UserEventDaoInMemory;
+import uk.co.markberridge.users.dao.UserEventDaoHibernate;
 import uk.co.markberridge.users.domain.User;
 import uk.co.markberridge.users.domain.UserEvent;
 import uk.co.markberridge.users.event.EventFeedGenerator;
@@ -72,7 +72,7 @@ public class UsersApplication extends Application<UsersConfiguration> {
 
         // DAO
         UserDao userDao = new UserDaoHibernate(hibernate.getSessionFactory());
-        EventDao<UserEvent> eventDao = new UserEventDaoInMemory();
+        EventDao<UserEvent> eventDao = new UserEventDaoHibernate(hibernate.getSessionFactory());
 
         // Event Feed Generator
         EventFeedGenerator<UserEvent> eventGenerator = new EventFeedGenerator<>(UserEvent.class, EventType.USER,

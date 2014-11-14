@@ -35,8 +35,8 @@ public class EventFeedGenerator<T extends Event<T>> {
     private static final String PREV_ARCHIVE = "prev-archive";
     private static final String NEXT_ARCHIVE = "next-archive";
     private static final String VIA = "via";
-    private static final String EVENT_FEED_AUTHOR = "CAP";
-    private static final String PRODUCING_SERVICE = "CAP";
+    private static final String EVENT_FEED_AUTHOR = "USERS";
+    private static final String PRODUCING_SERVICE = "USERS";
     private static final String MEDIA_TYPE = "application/atom+xml";
     private final JAXBContext context;
 

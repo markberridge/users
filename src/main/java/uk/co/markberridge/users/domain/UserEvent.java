@@ -1,6 +1,5 @@
 package uk.co.markberridge.users.domain;
 
-import java.net.URI;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -12,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.ws.rs.core.UriBuilder;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -50,23 +48,13 @@ public class UserEvent implements Event<UserEvent> {
     @Column(name = "TAG_URI")
     private String tagUri;
 
-    @XmlElement
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USERS_ID")
     private User user;
 
-    @XmlElement
-    @Transient
-    private Link link;
-
     public UserEvent(User user) {
         this();
         this.user = user;
-
-        // build URI to the User
-        // TODO make link URI absolute
-        URI uri = UriBuilder.fromResource(UserResource.class).path(user.getUsername()).build();
-        this.link = new Link("user", uri);
     }
 
     // @MarshallingConstructor
@@ -82,6 +70,14 @@ public class UserEvent implements Event<UserEvent> {
     @Override
     public String getTagUri() {
         return this.tagUri;
+    }
+
+    @XmlElement
+    public Link getLink() {
+        // TODO make link absolute from UriInfo NOT hard coded to
+        // http://localhost:8080/
+        return new Link("user", UriBuilder.fromPath("http://localhost:8080/").path(UserResource.class)
+                .path(user.getUsername()).build());
     }
 
     @Override
