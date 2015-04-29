@@ -45,8 +45,10 @@ public class UserRepresentation extends Representation {
     }
 
     public User buildNewUser() {
-        return new UserBuilder().username(username).password(password).intialState(User.State.EMAIL_CONFIRM_REQUIRED)
-                .build();
+        return new UserBuilder().username(username)
+                                .password(password)
+                                .intialState(User.State.EMAIL_CONFIRM_REQUIRED)
+                                .build();
     }
 
     @Override

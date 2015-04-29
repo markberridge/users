@@ -6,23 +6,7 @@ server:
     - type: http
       port: 8082
 
-# Database configuration for the running application
-# should NOT have permission to perform DDL statements on the database 
-applicationDatabase:
-  driverClass: com.mysql.jdbc.Driver
-  user: root
-  password: letmein
-  url: jdbc:mysql://localhost:3306/users
 
-
-# Database configuration for performing migrations
-# needs permission to perform DDL statements on the database 
-migrationDatabase:
-  driverClass: com.mysql.jdbc.Driver
-  user: root
-  password: letmein
-  url: jdbc:mysql://localhost:3306/users
-  
 
 logging:
   level: INFO

@@ -16,8 +16,6 @@ public class CreateUserActivity {
     }
 
     public UserRepresentation createOrUpdate(UserRepresentation user) {
-        
-        
         return new UserRepresentation(dao.createOrUpdateUser(user.buildNewUser()));
     }
 }
