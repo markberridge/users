@@ -1,13 +1,9 @@
-sudo: required
-
 language: java
 jdk:
   - oraclejdk8
 
 services:
-  - docker
+  - mysql
 
-before_install:
-  - docker pull mysql:latest
-  - docker run --name users-mysql -e MYSQL_ROOT_PASSWORD=letmein -d -p 3306:3306 mysql:latest
-  - docker exec users-mysql mysqladmin -uroot -pletmein create users
+before_script:
+  - mysql -e 'create database users;'

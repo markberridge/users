@@ -11,8 +11,8 @@ server:
 applicationDatabase:
   driverClass: com.mysql.jdbc.Driver
   user: root
-  password: letmein
-  url: jdbc:mysql://localhost:3306/users
+  password:
+  url: jdbc:mysql://127.0.0.1:3306/users
 
 
 # Database configuration for performing migrations
@@ -20,8 +20,8 @@ applicationDatabase:
 migrationDatabase:
   driverClass: com.mysql.jdbc.Driver
   user: root
-  password: letmein
-  url: jdbc:mysql://localhost:3306/users
+  password:
+  url: jdbc:mysql://127.0.0.1:3306/users
   
 
 logging:
