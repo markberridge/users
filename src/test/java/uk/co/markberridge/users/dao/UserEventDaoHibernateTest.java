@@ -31,8 +31,8 @@ public class UserEventDaoHibernateTest extends AbstractHibernateTestCase {
         userDao = new UserDaoHibernate(hibernateRule.getSessionFactory());
 
         hibernateRule.beginTransaction();
-        hibernateRule.getSession().createSQLQuery("DELETE FROM USER_EVENT").executeUpdate();
-        hibernateRule.getSession().createSQLQuery("DELETE FROM USERS").executeUpdate();
+        hibernateRule.getSession().createSQLQuery("DELETE FROM user_event").executeUpdate();
+        hibernateRule.getSession().createSQLQuery("DELETE FROM users").executeUpdate();
         hibernateRule.commit();
 
         hibernateRule.beginTransaction();

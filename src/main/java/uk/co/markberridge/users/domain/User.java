@@ -26,7 +26,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)

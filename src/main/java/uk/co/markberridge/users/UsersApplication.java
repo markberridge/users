@@ -80,7 +80,7 @@ public class UsersApplication extends Application<UsersConfiguration> {
 
         // Resources
         environment.jersey().register(new UserResource(userDao));
-        environment.jersey().register(new EventResource<UserEvent>(eventGenerator));
+        environment.jersey().register(new EventResource<>(eventGenerator));
 
         // Exception Mapping
         environment.jersey().register(UserAlreadyExistsException.Mapper.class);

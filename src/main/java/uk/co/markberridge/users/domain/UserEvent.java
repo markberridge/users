@@ -32,7 +32,7 @@ import com.google.common.primitives.Longs;
 @XmlRootElement
 @AttributeAccessor("field")
 @XmlAccessorType(XmlAccessType.NONE)
-@Table(name = "USER_EVENT")
+@Table(name = "user_event")
 public class UserEvent implements Event<UserEvent> {
 
     @Id
@@ -41,15 +41,15 @@ public class UserEvent implements Event<UserEvent> {
     @XmlElement
     private Long id;
 
-    @Column(name = "CREATED_DATE", nullable = false)
+    @Column(name = "created_date", nullable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime createddate = new LocalDateTime();
 
-    @Column(name = "TAG_URI")
+    @Column(name = "tag_uri")
     private String tagUri;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "USERS_ID")
+    @JoinColumn(name = "users_id")
     private User user;
 
     public UserEvent(User user) {

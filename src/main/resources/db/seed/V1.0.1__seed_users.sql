@@ -1,1 +1,1 @@
-INSERT USERS(ID,USERNAME,PASSWORD,STATUS,CREATED_DATE) VALUES ('1','admin','letmein','ACTIVE',NOW());
+INSERT users(id,username,password,status,created_date) VALUES ('1','admin','letmein','ACTIVE',NOW());
