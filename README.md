@@ -16,5 +16,5 @@ docker run --name users-mysql -e MYSQL_ROOT_PASSWORD=letmein -d -p 3306:3306 mys
 2. Create the `users` database:
 
 ```
-docker exec -it users-mysql mysqladmin -uroot -pletmein create users
+docker exec users-mysql mysqladmin -uroot -pletmein create users
 ```
