@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/markberridge/users.svg?branch=master)](https://travis-ci.org/markberridge/users)
+[![Code Climate](https://codeclimate.com/github/markberridge/users/badges/gpa.svg)](https://codeclimate.com/github/markberridge/users)
 
 users
 =====
